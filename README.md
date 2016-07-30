@@ -4,8 +4,8 @@ NetstorageAPI: Akamai Netstorage API for Ruby
 [![Gem Version](https://badge.fury.io/rb/netstorageapi.svg)](https://badge.fury.io/rb/netstorageapi)
 
 NetstorageAPI is Akamai Netstorage (File/Object Store) API for Ruby 2.0+.
-
-
+  
+  
 Installation
 ------------
 
@@ -14,8 +14,8 @@ To install Netstorage API for Ruby:
 ```bash
 $ gem install netstorageapi
 ```
-
-
+  
+  
 Example
 -------
 
@@ -36,8 +36,8 @@ ok, response = ns.upload(local_source, netstorage_destination)
 response.body
 # => "<HTML>Request Processed</HTML>\n"
 ```
-
-
+  
+  
 Methods
 -------
 
@@ -60,8 +60,8 @@ ns.upload(LOCAL_SOURCE, NETSTORAGE_DESTINATION)
 # INFO: can "upload" Only a single file, not directory.
 # WARN: can raise FILE related error in "download" and "upload".
 ```
-
-
+  
+  
 Test
 ----
 
@@ -69,40 +69,40 @@ You can test all above methods with [unittest script](https://github.com/AstinCH
 (NOTE: You should input NS_HOSTNAME, NS_KEYNAME, NS_KEY and NS_CPCODE in the script):
 
 ```bash
+$ ruby test_netstorage.rb
+Loaded suite test_netstorage
+Started
+[TEST] dir /360949 done
+[TEST] mkdir /360949/1abb7a86-d7a1-4f8e-ac8e-77c867b1dfd7 done
+[TEST] upload bf9fd3d4-1dd5-408c-873b-afc765ed05b9.txt to /360949/1abb7a86-d7a1-4f8e-ac8e-77c867b1dfd7/bf9fd3d4-1dd5-408c-873b-afc765ed05b9.txt done
+[TEST] du done
+[TEST] mtime /360949/1abb7a86-d7a1-4f8e-ac8e-77c867b1dfd7/bf9fd3d4-1dd5-408c-873b-afc765ed05b9.txt to 1469863258 done
+[TEST] stat done
+[TEST] symlink /360949/1abb7a86-d7a1-4f8e-ac8e-77c867b1dfd7/bf9fd3d4-1dd5-408c-873b-afc765ed05b9.txt to /360949/1abb7a86-d7a1-4f8e-ac8e-77c867b1dfd7/bf9fd3d4-1dd5-408c-873b-afc765ed05b9.txt_lnk done
+[TEST] rename /360949/1abb7a86-d7a1-4f8e-ac8e-77c867b1dfd7/bf9fd3d4-1dd5-408c-873b-afc765ed05b9.txt to /360949/1abb7a86-d7a1-4f8e-ac8e-77c867b1dfd7/bf9fd3d4-1dd5-408c-873b-afc765ed05b9.txt_rename done
+[TEST] download /360949/1abb7a86-d7a1-4f8e-ac8e-77c867b1dfd7/bf9fd3d4-1dd5-408c-873b-afc765ed05b9.txt_rename done
+[TEST] delete /360949/1abb7a86-d7a1-4f8e-ac8e-77c867b1dfd7/bf9fd3d4-1dd5-408c-873b-afc765ed05b9.txt_rename done
+[TEST] delete /360949/1abb7a86-d7a1-4f8e-ac8e-77c867b1dfd7/bf9fd3d4-1dd5-408c-873b-afc765ed05b9.txt_lnk done
+[TEST] rmdir /360949/1abb7a86-d7a1-4f8e-ac8e-77c867b1dfd7 done.
+[TEARDOWN] remove bf9fd3d4-1dd5-408c-873b-afc765ed05b9.txt from local done
+[TEARDOWN] remove bf9fd3d4-1dd5-408c-873b-afc765ed05b9.txt_rename from local done
+.
 
-    Loaded suite test_netstorage
-    Started
-    [TEST] dir /360949 done
-    [TEST] mkdir /360949/1abb7a86-d7a1-4f8e-ac8e-77c867b1dfd7 done
-    [TEST] upload bf9fd3d4-1dd5-408c-873b-afc765ed05b9.txt to /360949/1abb7a86-d7a1-4f8e-ac8e-77c867b1dfd7/bf9fd3d4-1dd5-408c-873b-afc765ed05b9.txt done
-    [TEST] du done
-    [TEST] mtime /360949/1abb7a86-d7a1-4f8e-ac8e-77c867b1dfd7/bf9fd3d4-1dd5-408c-873b-afc765ed05b9.txt to 1469863258 done
-    [TEST] stat done
-    [TEST] symlink /360949/1abb7a86-d7a1-4f8e-ac8e-77c867b1dfd7/bf9fd3d4-1dd5-408c-873b-afc765ed05b9.txt to /360949/1abb7a86-d7a1-4f8e-ac8e-77c867b1dfd7/bf9fd3d4-1dd5-408c-873b-afc765ed05b9.txt_lnk done
-    [TEST] rename /360949/1abb7a86-d7a1-4f8e-ac8e-77c867b1dfd7/bf9fd3d4-1dd5-408c-873b-afc765ed05b9.txt to /360949/1abb7a86-d7a1-4f8e-ac8e-77c867b1dfd7/bf9fd3d4-1dd5-408c-873b-afc765ed05b9.txt_rename done
-    [TEST] download /360949/1abb7a86-d7a1-4f8e-ac8e-77c867b1dfd7/bf9fd3d4-1dd5-408c-873b-afc765ed05b9.txt_rename done
-    [TEST] delete /360949/1abb7a86-d7a1-4f8e-ac8e-77c867b1dfd7/bf9fd3d4-1dd5-408c-873b-afc765ed05b9.txt_rename done
-    [TEST] delete /360949/1abb7a86-d7a1-4f8e-ac8e-77c867b1dfd7/bf9fd3d4-1dd5-408c-873b-afc765ed05b9.txt_lnk done
-    [TEST] rmdir /360949/1abb7a86-d7a1-4f8e-ac8e-77c867b1dfd7 done.
-    [TEARDOWN] remove bf9fd3d4-1dd5-408c-873b-afc765ed05b9.txt from local done
-    [TEARDOWN] remove bf9fd3d4-1dd5-408c-873b-afc765ed05b9.txt_rename from local done
-    .
-
-    Finished in 5.991238 seconds.
-    --------------------------------------------------------------------------------
-    1 tests, 14 assertions, 0 failures, 0 errors, 0 pendings, 0 omissions, 0 notifications
-    100% passed
-    --------------------------------------------------------------------------------
-    0.17 tests/s, 2.34 assertions/s
+Finished in 5.991238 seconds.
+--------------------------------------------------------------------------------
+1 tests, 14 assertions, 0 failures, 0 errors, 0 pendings, 0 omissions, 0 notifications
+100% passed
+--------------------------------------------------------------------------------
+0.17 tests/s, 2.34 assertions/s
 ```
-
-
+  
+  
 Author
 ------
 
 Astin Choi (achoi@akamai.com)  
-
-
+  
+  
 License
 -------
 
