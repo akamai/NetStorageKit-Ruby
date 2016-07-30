@@ -11,67 +11,64 @@ Installation
 
 To install Netstorage API for Ruby:  
 
-.. code-block:: bash
-
-    $ gem install netstorageapi
+```bash
+$ gem install netstorageapi
+```
 
 
 Example
 -------
 
-.. code-block:: ruby
+```ruby
+require "akamai/netstorage"
 
-    irb> require "akamai/netstorage"
-    irb>
-    irb> NS_HOSTNAME = "astin-nsu.akamaihd.net"
-    irb> NS_KEYNAME = "astinastin"
-    irb> NS_KEY = "xxxxxxxxxx" # Don't expose NS_KEY on public repository.
-    irb> NS_CPCODE = "360949"
-    irb>
-    irb> ns = Akamai::Netstorage.new(NS_HOSTNAME, NS_KEYNAME, NS_KEY)
-    irb> local_source = "hello.txt"
-    irb> netstorage_destination = "/#{NS_CPCODE}/hello.txt" # or "/#{NS_CPCODE}/" is same.
-    irb>
-    irb> ok, response = ns.upload(local_source, netstorage_destination)
-    => [true, <#Net::HTTPOK 200 OK readbody=true>] # true means 200 OK; If false, it's not 200 OK 
-    irb> response.body
-    => "<HTML>Request Processed</HTML>\n"
-    irb>
+NS_HOSTNAME = "astin-nsu.akamaihd.net"
+NS_KEYNAME = "astinastin"
+NS_KEY = "xxxxxxxxxx" # Don't expose NS_KEY on public repository.
+NS_CPCODE = "360949"
+
+ns = Akamai::Netstorage.new(NS_HOSTNAME, NS_KEYNAME, NS_KEY)
+local_source = "hello.txt"
+netstorage_destination = "/#{NS_CPCODE}/hello.txt" # or "/#{NS_CPCODE}/" is same.
+
+ok, response = ns.upload(local_source, netstorage_destination)
+# => [true, <#Net::HTTPOK 200 OK readbody=true>] # true means 200 OK; If false, it's not 200 OK 
+response.body
+# => "<HTML>Request Processed</HTML>\n"
+```
 
 
 Methods
 -------
 
-.. code-block:: ruby
-
-    irb> ns.delete(NETSTORAGE_PATH)
-    irb> ns.dir(NETSTORAGE_PATH)
-    irb> ns.download(NETSTORAGE_SOURCE, LOCAL_DESTINATION)
-    irb> ns.du(NETSTORAGE_PATH)
-    irb> ns.list(NETSTORAGE_PATH)
-    irb> ns.mkdir(NETSTORAGE_PATH + DIRECTORY_NAME)
-    irb> ns.mtime(NETSTORAGE_PATH, TIME) # ex) TIME: Time.now.to_i
-    irb> ns.quick_delete(NETSTORAGE_DIR) # needs to be enabled on the CP Code
-    irb> ns.rmdir(NETSTORAGE_DIR) # remove empty direcoty
-    irb> ns.stat(NETSTORAGE_PATH)
-    irb> ns.symlink(NETSTORAGE_SOURCE, NETSTORAGE_TARGET)
-    irb> ns.upload(LOCAL_SOURCE, NETSTORAGE_DESTINATION)
-    irb>
-    irb>
-    irb> # INFO: return (true/false, Net::HTTP.. Object)
-    irb> #               true means 200 OK.
-    irb> # INFO: can "upload" Only a single file, not directory.
-    irb> # WARN: can raise FILE related error in "download" and "upload".
-    irb>
+```ruby
+ns.delete(NETSTORAGE_PATH)
+ns.dir(NETSTORAGE_PATH)
+ns.download(NETSTORAGE_SOURCE, LOCAL_DESTINATION)
+ns.du(NETSTORAGE_PATH)
+ns.list(NETSTORAGE_PATH)
+ns.mkdir(NETSTORAGE_PATH + DIRECTORY_NAME)
+ns.mtime(NETSTORAGE_PATH, TIME) # ex) TIME: Time.now.to_i
+ns.quick_delete(NETSTORAGE_DIR) # needs to be enabled on the CP Code
+ns.rmdir(NETSTORAGE_DIR) # remove empty direcoty
+ns.stat(NETSTORAGE_PATH)
+ns.symlink(NETSTORAGE_SOURCE, NETSTORAGE_TARGET)
+ns.upload(LOCAL_SOURCE, NETSTORAGE_DESTINATION)
+  
+# INFO: return (true/false, Net::HTTP.. Object)
+#               true means 200 OK.
+# INFO: can "upload" Only a single file, not directory.
+# WARN: can raise FILE related error in "download" and "upload".
+```
 
 
 Test
 ----
 
-You can test all above methods with `unittest script <https://github.com/AstinCHOI/NetStorageKit-Ruby/blob/master/test_netstorage.rb>`_
+You can test all above methods with [unittest script](https://github.com/AstinCHOI/NetStorageKit-Ruby/blob/master/test_netstorage.rb)
 (NOTE: You should input NS_HOSTNAME, NS_KEYNAME, NS_KEY and NS_CPCODE in the script):
 
-.. code-block:: bash
+```bash
 
     Loaded suite test_netstorage
     Started
@@ -97,6 +94,7 @@ You can test all above methods with `unittest script <https://github.com/AstinCH
     100% passed
     --------------------------------------------------------------------------------
     0.17 tests/s, 2.34 assertions/s
+```
 
 
 Author
@@ -112,7 +110,9 @@ Copyright 2016 Akamai Technologies, Inc.  All rights reserved.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
-You may obtain a copy of the License at `<http://www.apache.org/licenses/LICENSE-2.0>`_.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
 
 Unless required by applicable law or agreed to in writing, software
 distributed under the License is distributed on an "AS IS" BASIS,
