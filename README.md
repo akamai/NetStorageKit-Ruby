@@ -20,21 +20,21 @@ Example
 -------
 
 ```ruby
-require "akamai/netstorage"
-
-NS_HOSTNAME = "astin-nsu.akamaihd.net"
-NS_KEYNAME = "astinastin"
-NS_KEY = "xxxxxxxxxx" # Don't expose NS_KEY on public repository.
-NS_CPCODE = "360949"
-
-ns = Akamai::Netstorage.new(NS_HOSTNAME, NS_KEYNAME, NS_KEY)
-local_source = "hello.txt"
-netstorage_destination = "/#{NS_CPCODE}/hello.txt" # or "/#{NS_CPCODE}/" is same.
-
-ok, response = ns.upload(local_source, netstorage_destination)
-# => [true, <#Net::HTTPOK 200 OK readbody=true>] # true means 200 OK; If false, it's not 200 OK 
-response.body
-# => "<HTML>Request Processed</HTML>\n"
+> require "akamai/netstorage"
+> 
+> NS_HOSTNAME = "astin-nsu.akamaihd.net"
+> NS_KEYNAME = "astinastin"
+> NS_KEY = "xxxxxxxxxx" # Don't expose NS_KEY on public repository.
+> NS_CPCODE = "360949"
+> 
+> ns = Akamai::Netstorage.new(NS_HOSTNAME, NS_KEYNAME, NS_KEY)
+> local_source = "hello.txt"
+> netstorage_destination = "/#{NS_CPCODE}/hello.txt" # or "/#{NS_CPCODE}/" is same.
+>
+> ok, response = ns.upload(local_source, netstorage_destination)
+=> [true, <#Net::HTTPOK 200 OK readbody=true>] # true means 200 OK; If false, it's not 200 OK 
+> response.body
+=> "<HTML>Request Processed</HTML>\n"
 ```
   
   
@@ -42,23 +42,23 @@ Methods
 -------
 
 ```ruby
-ns.delete(NETSTORAGE_PATH)
-ns.dir(NETSTORAGE_PATH)
-ns.download(NETSTORAGE_SOURCE, LOCAL_DESTINATION)
-ns.du(NETSTORAGE_PATH)
-ns.list(NETSTORAGE_PATH)
-ns.mkdir(NETSTORAGE_PATH + DIRECTORY_NAME)
-ns.mtime(NETSTORAGE_PATH, TIME) # ex) TIME: Time.now.to_i
-ns.quick_delete(NETSTORAGE_DIR) # needs to be enabled on the CP Code
-ns.rmdir(NETSTORAGE_DIR) # remove empty direcoty
-ns.stat(NETSTORAGE_PATH)
-ns.symlink(NETSTORAGE_SOURCE, NETSTORAGE_TARGET)
-ns.upload(LOCAL_SOURCE, NETSTORAGE_DESTINATION)
-  
-# INFO: return (true/false, Net::HTTP.. Object)
-#               true means 200 OK.
-# INFO: can "upload" Only a single file, not directory.
-# WARN: can raise FILE related error in "download" and "upload".
+> ns.delete(NETSTORAGE_PATH)
+> ns.dir(NETSTORAGE_PATH)
+> ns.download(NETSTORAGE_SOURCE, LOCAL_DESTINATION)
+> ns.du(NETSTORAGE_PATH)
+> ns.list(NETSTORAGE_PATH)
+> ns.mkdir(NETSTORAGE_PATH + DIRECTORY_NAME)
+> ns.mtime(NETSTORAGE_PATH, TIME) # ex) TIME: Time.now.to_i
+> ns.quick_delete(NETSTORAGE_DIR) # needs to be enabled on the CP Code
+> ns.rmdir(NETSTORAGE_DIR) # remove empty direcoty
+> ns.stat(NETSTORAGE_PATH)
+> ns.symlink(NETSTORAGE_SOURCE, NETSTORAGE_TARGET)
+> ns.upload(LOCAL_SOURCE, NETSTORAGE_DESTINATION)
+>  
+> # INFO: return (true/false, Net::HTTP.. Object)
+> #               true means 200 OK.
+> # INFO: can "upload" Only a single file, not directory.
+> # WARN: can raise FILE related error in "download" and "upload".
 ```
   
   
@@ -83,7 +83,7 @@ Started
 [TEST] download /360949/1abb7a86-d7a1-4f8e-ac8e-77c867b1dfd7/bf9fd3d4-1dd5-408c-873b-afc765ed05b9.txt_rename done
 [TEST] delete /360949/1abb7a86-d7a1-4f8e-ac8e-77c867b1dfd7/bf9fd3d4-1dd5-408c-873b-afc765ed05b9.txt_rename done
 [TEST] delete /360949/1abb7a86-d7a1-4f8e-ac8e-77c867b1dfd7/bf9fd3d4-1dd5-408c-873b-afc765ed05b9.txt_lnk done
-[TEST] rmdir /360949/1abb7a86-d7a1-4f8e-ac8e-77c867b1dfd7 done.
+[TEST] rmdir /360949/1abb7a86-d7a1-4f8e-ac8e-77c867b1dfd7 done
 [TEARDOWN] remove bf9fd3d4-1dd5-408c-873b-afc765ed05b9.txt from local done
 [TEARDOWN] remove bf9fd3d4-1dd5-408c-873b-afc765ed05b9.txt_rename from local done
 .

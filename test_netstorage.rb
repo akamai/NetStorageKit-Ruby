@@ -137,6 +137,6 @@ class TestNetstorage < Test::Unit::TestCase
         # rmdir
         ok, _ = @ns.rmdir(@temp_ns_dir)
         assert_equal(true, ok, "rmdir fail.")
-        puts "[TEST] rmdir #{@temp_ns_dir} done."
+        puts "[TEST] rmdir #{@temp_ns_dir} done"
     end
 end
