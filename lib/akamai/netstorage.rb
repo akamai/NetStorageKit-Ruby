@@ -26,18 +26,19 @@ require "uri"
 
 module Akamai
     class Netstorage
-
         attr_accessor :hostname, :keyname, :key
+        attr_reader :request
 
         def initialize(hostname, keyname, key)
             @hostname = hostname
             @keyname = keyname
             @key = key
+            @request = nil
         end
 
         private
 
-        def _response(request, uri, kwargs)
+        def _response(uri, kwargs)
             if kwargs[:action] == "download"
                 local_destination = kwargs[:destination]
                 if kwargs[:path]
@@ -49,7 +50,7 @@ module Akamai
                     end
                 end
                 response = Net::HTTP.start(uri.hostname, uri.port) { |http| 
-                    http.request request do |res|
+                    http.request @request do |res|
                         open(local_destination, "wb") do |io|
                             res.read_body do |chunk|
                                 io.write chunk
@@ -58,13 +59,13 @@ module Akamai
                     end
                 }
             elsif kwargs[:action] == "upload"
-                request.body = File.read(kwargs[:source])
+                @request.body = File.read(kwargs[:source])
                 response = Net::HTTP.start(uri.hostname, uri.port) { |http| 
-                        http.request(request) 
+                        http.request(@request) 
                 }
             else 
                 response = Net::HTTP.start(uri.hostname, uri.port) { |http| 
-                        http.request(request) 
+                        http.request(@request) 
                 }
             end        
             return response
@@ -89,14 +90,14 @@ module Akamai
             }
 
             if kwargs[:method] == "GET"
-                request = Net::HTTP::Get.new(uri, initheader=headers)
+                @request = Net::HTTP::Get.new(uri, initheader=headers)
             elsif kwargs[:method] == "POST" 
-                request = Net::HTTP::Post.new(uri, initheader=headers)
+                @request = Net::HTTP::Post.new(uri, initheader=headers)
             elsif kwargs[:method] == "PUT" # Use only upload
-                request = Net::HTTP::Put.new(uri, initheader=headers)
+                @request = Net::HTTP::Put.new(uri, initheader=headers)
             end
 
-            response = _response(request, uri, kwargs)
+            response = _response(uri, kwargs)
             
             return response.code == "200", response
         end

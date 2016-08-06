@@ -16,9 +16,11 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+
 require "optparse"
 
 require "akamai/netstorage"
+# require_relative "lib/akamai/netstorage" 
 
 
 action_options = <<ACTION_OPTIONS
@@ -51,24 +53,45 @@ action_options = <<ACTION_OPTIONS
             rmdir /123456/dir1
 ACTION_OPTIONS
 
+
+def print_result(request, response, action)
+    puts "=== Request Header ==="
+    puts "#{request.method} #{request.path}" 
+    request.each_capitalized { |header, value| 
+        puts "#{header}: #{value}" 
+    } 
+
+    puts "=== Response Header ===" 
+    puts "#{response.code} #{response.message}" 
+    response.each_capitalized { |header, value| 
+        puts "#{header}: #{value}" 
+    }
+
+    if action != "download"
+        puts "=== Response Body ===" 
+        puts response.body
+    end
+end
+
+
 options = {}
 
 optparse = OptionParser.new do |opts|
-    opts.banner = "Usage: ruby cms_netstorage.rb -H hostname-nsu.akamaihd.net -k keyname -K key -action action [action_options]"
+    opts.banner = "Usage: ruby cms_netstorage.rb -H hostname-nsu.akamaihd.net -k keyname -K key -action [action_options]"
 
-    opts.on('-H', '--host', 'Netstorage API hostname') do |host|
+    opts.on('-H', '--host host', 'Netstorage API hostname') do |host|
         options[:host] = host
     end
 
-    opts.on('-k', '--keyname', 'Netstorage API keyname') do |keyname|
+    opts.on('-k', '--keyname keyname', 'Netstorage API keyname') do |keyname|
         options[:keyname] = keyname
     end
 
-    opts.on('-K', '--key', 'Netstorage API key') do |key|
+    opts.on('-K', '--key key', 'Netstorage API key') do |key|
         options[:key] = key
     end
 
-    opts.on('-a', '--action', "action\n#{action_options}") do |action|
+    opts.on('-a', '--action action', "action\n#{action_options}") do |action|
         options[:action] = action
     end
 
@@ -83,4 +106,40 @@ begin
 rescue OptionParser::InvalidOption, OptionParser::MissingArgument
     puts optparse
     exit
+end
+
+if options[:host] && options[:keyname] && options[:key] && options[:action]
+    ns = Akamai::Netstorage.new(options[:host], options[:keyname], options[:key])
+    
+    
+    if options[:action] == "delete"
+        ok, response = ns.delete(ARGV.shift)
+    elsif options[:action] == "dir"
+        ok, response = ns.dir(ARGV.shift)
+    elsif options[:action] == "download"
+        ok, response = ns.download(ARGV.shift, (tmp = ARGV.shift) == nil ? '' : tmp)
+    elsif options[:action] == "du"
+        ok, response = ns.du(ARGV.shift)
+    elsif options[:action] == "mkdir"
+        ok, response = ns.mkdir(ARGV.shift)
+    elsif options[:action] == "mtime"
+        ok, response = ns.mtime(ARGV.shift, ARGV.shift)
+    elsif options[:action] == "quick-delete"
+        ok, response = ns.quick_delete(ARGV.shift)
+    elsif options[:action] == "rmdir"
+        ok, response = ns.rmdir(ARGV.shift)
+    elsif options[:action] == "stat"
+        ok, response = ns.stat(ARGV.shift)
+    elsif options[:action] == "symlink"
+        ok, response = ns.symlink(ARGV.shift, ARGV.shift)
+    elsif options[:action] == "upload"
+        ok, response = ns.upload(ARGV.shift, ARGV.shift)
+    else 
+        puts optparse
+        exit
+    end
+    
+    print_result(ns.request, response, options[:action])
+else
+    puts optparse
 end
