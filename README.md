@@ -47,7 +47,7 @@ Methods
 > ns.download(NETSTORAGE_SOURCE, LOCAL_DESTINATION)
 > ns.du(NETSTORAGE_PATH)
 > ns.list(NETSTORAGE_PATH)
-> ns.mkdir(NETSTORAGE_PATH + DIRECTORY_NAME)
+> ns.mkdir("#{NETSTORAGE_PATH}/#{DIRECTORY_NAME}")
 > ns.mtime(NETSTORAGE_PATH, TIME) # ex) TIME: Time.now.to_i
 > ns.quick_delete(NETSTORAGE_DIR) # needs to be enabled on the CP Code
 > ns.rmdir(NETSTORAGE_DIR) # remove empty direcoty
@@ -95,6 +95,18 @@ Finished in 5.991238 seconds.
 --------------------------------------------------------------------------------
 0.17 tests/s, 2.34 assertions/s
 ```
+  
+  
+Command
+-------
+
+You can run the [script](https://github.com/AstinCHOI/NetStorageKit-Ruby/blob/master/cms_netstorage.rb) with command line parameters.
+
+```bash
+$ ruby cms_netstorage.rb -H astin-nsu.akamaihd.net -k astinastin -K xxxxxxxxxx -a dir /360949
+```
+  
+Use -h or --help option for more detail.
   
   
 Author

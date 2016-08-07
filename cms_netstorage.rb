@@ -24,7 +24,7 @@ require "akamai/netstorage"
 
 
 action_options = <<ACTION_OPTIONS
-        "123456" is CP(Content Provider) Code for Netstorage
+        ## "123456" is CP(Content Provider) Code for Netstorage ##
         dir: to list the contents of the directory /123456
             dir /123456
         upload: to upload file.txt to /123456 directory
@@ -39,7 +39,7 @@ action_options = <<ACTION_OPTIONS
             download /123456/file.txt LOCAL_PATH
         mtime: to set the timestamp of /123456/file.txt to 1463042904 in epoch format)
             mtime /123456/file.txt 1463042904
-        quick-delete: to delete /123456/dir1 recursively (quick-delete needs to be enabled on the CP Code):
+        quick-delete: to delete /123456/dir1 recursively (quick-delete needs to be enabled on the CP Code)
             quick-delete /123456/dir1
         rename: to rename /123456/file.txt to /123456/newfile.txt
             rename /123456/file.txt /123456/newfile.txt
