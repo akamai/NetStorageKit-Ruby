@@ -27,7 +27,7 @@ Example
 > NS_KEY = "xxxxxxxxxx" # Don't expose NS_KEY on public repository.
 > NS_CPCODE = "360949"
 > 
-> ns = Akamai::Netstorage.new(NS_HOSTNAME, NS_KEYNAME, NS_KEY)
+> ns = Akamai::Netstorage.new(NS_HOSTNAME, NS_KEYNAME, NS_KEY, ssl=false) # ssl is optional (default: false)
 > local_source = "hello.txt"
 > netstorage_destination = "/#{NS_CPCODE}/hello.txt" # or "/#{NS_CPCODE}/" is same.
 >
@@ -50,9 +50,10 @@ Methods
 > ns.mkdir("#{NETSTORAGE_PATH}/#{DIRECTORY_NAME}")
 > ns.mtime(NETSTORAGE_PATH, TIME) # ex) TIME: Time.now.to_i
 > ns.quick_delete(NETSTORAGE_DIR) # needs to be enabled on the CP Code
+> ns.rename(NETSTORAGE_TARGET, NETSTORAGE_DESTINATION)
 > ns.rmdir(NETSTORAGE_DIR) # remove empty direcoty
 > ns.stat(NETSTORAGE_PATH)
-> ns.symlink(NETSTORAGE_SOURCE, NETSTORAGE_TARGET)
+> ns.symlink(NETSTORAGE_TARGET, NETSTORAGE_DESTINATION)
 > ns.upload(LOCAL_SOURCE, NETSTORAGE_DESTINATION)
 >  
 > # INFO: return (true/false, Net::HTTP.. Object)

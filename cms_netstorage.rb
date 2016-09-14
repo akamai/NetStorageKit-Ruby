@@ -77,7 +77,7 @@ end
 options = {}
 
 optparse = OptionParser.new do |opts|
-    opts.banner = "Usage: ruby cms_netstorage.rb -H hostname-nsu.akamaihd.net -k keyname -K key -action [action_options]"
+    opts.banner = "Usage: ruby cms_netstorage.rb -H [hostname] -k [keyname] -K [key] -action [action_options] .."
 
     opts.on('-H', '--host host', 'Netstorage API hostname') do |host|
         options[:host] = host

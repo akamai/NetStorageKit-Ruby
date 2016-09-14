@@ -26,13 +26,15 @@ require "uri"
 
 module Akamai
     class Netstorage
-        attr_accessor :hostname, :keyname, :key
+        attr_accessor :hostname, :keyname, :key, :ssl
         attr_reader :request
 
-        def initialize(hostname, keyname, key)
+        def initialize(hostname, keyname, key, ssl=false)
             @hostname = hostname
             @keyname = keyname
             @key = key
+            @ssl = ssl ? 's' : ''
+
             @request = nil
         end
 
@@ -49,7 +51,8 @@ module Akamai
                         local_destination = File.join(local_destination, ns_filename)
                     end
                 end
-                response = Net::HTTP.start(uri.hostname, uri.port) { |http| 
+                response = Net::HTTP.start(uri.hostname, uri.port, 
+                  :use_ssl => uri.scheme == 'https') { |http| 
                     http.request @request do |res|
                         open(local_destination, "wb") do |io|
                             res.read_body do |chunk|
@@ -58,16 +61,18 @@ module Akamai
                         end
                     end
                 }
-            elsif kwargs[:action] == "upload"
-                @request.body = File.read(kwargs[:source])
-                response = Net::HTTP.start(uri.hostname, uri.port) { |http| 
-                        http.request(@request) 
-                }
-            else 
-                response = Net::HTTP.start(uri.hostname, uri.port) { |http| 
-                        http.request(@request) 
-                }
-            end        
+                return response
+            end
+
+            if kwargs[:action] == "upload"
+                @request.body = File.read(kwargs[:source]) 
+            end 
+            
+            response = Net::HTTP.start(uri.hostname, uri.port, 
+              :use_ssl => uri.scheme == 'https') { |http| 
+                    http.request(@request) 
+            }
+
             return response
         end
         
@@ -81,7 +86,7 @@ module Akamai
             hash_ = OpenSSL::HMAC.digest("sha256", @key, message)
             acs_auth_sign = Base64.encode64(hash_).rstrip
 
-            uri = URI("http://#{@hostname}#{path}")
+            uri = URI("http#{@ssl}://#{@hostname}#{path}")
             headers = {
                 'X-Akamai-ACS-Action' => acs_action,
                 'X-Akamai-ACS-Auth-Data' => acs_auth_data,
