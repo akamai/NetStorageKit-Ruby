@@ -59,7 +59,7 @@ Methods
 > # INFO: return (true/false, Net::HTTP.. Object)
 > #               true means 200 OK.
 > # INFO: can "upload" Only a single file, not directory.
-> # WARN: can raise FILE related error in "download" and "upload".
+> # WARN: Can raise Akamai::NetstorageError from all methods.
 ```
   
   
@@ -88,13 +88,16 @@ Started
 [TEARDOWN] remove bf9fd3d4-1dd5-408c-873b-afc765ed05b9.txt from local done
 [TEARDOWN] remove bf9fd3d4-1dd5-408c-873b-afc765ed05b9.txt_rename from local done
 .
+[TEST] Invalid ns path NetstorageError test done
+[TEST] Invalid local path NetstorageError test done
+.
 
-Finished in 5.991238 seconds.
+Finished in x.xxxxxx seconds.
 --------------------------------------------------------------------------------
-1 tests, 14 assertions, 0 failures, 0 errors, 0 pendings, 0 omissions, 0 notifications
+2 tests, 14 assertions, 0 failures, 0 errors, 0 pendings, 0 omissions, 0 notifications
 100% passed
 --------------------------------------------------------------------------------
-0.17 tests/s, 2.34 assertions/s
+0.78 tests/s, 5.47 assertions/s
 ```
   
   

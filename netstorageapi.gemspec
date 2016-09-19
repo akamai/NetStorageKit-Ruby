@@ -1,7 +1,7 @@
 Gem::Specification.new do |s|
   s.name        = 'netstorageapi'
-  s.version     = '0.7.0'
-  s.date        = '2016-09-14'
+  s.version     = '0.8.0'
+  s.date        = '2016-09-19'
   s.summary     = 'Akamai Netstorage API for Ruby'
   s.description = 'NetstorageAPI is Akamai Netstorage (File/Object Store) API for Ruby 2.0+'
   s.authors     = ['Astin Choi']

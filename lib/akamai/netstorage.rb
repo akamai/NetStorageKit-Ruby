@@ -25,11 +25,20 @@ require "uri"
 
 
 module Akamai
+    class NetstorageError < Exception
+        """Base-class for all exceptions raised by Netstorage Class"""
+    end
+
+
     class Netstorage
         attr_accessor :hostname, :keyname, :key, :ssl
         attr_reader :request
 
         def initialize(hostname, keyname, key, ssl=false)
+            if hostname == '' || keyname == '' || key == ''
+                raise NetstorageError, '[NetstorageError] You should input netstorage hostname, keyname and key all'
+            end
+
             @hostname = hostname
             @keyname = keyname
             @key = key
@@ -43,21 +52,24 @@ module Akamai
         def _response(uri, kwargs)
             if kwargs[:action] == "download"
                 local_destination = kwargs[:destination]
-                if kwargs[:path]
-                    ns_filename = kwargs[:path][-1] != '/' ? File.basename(kwargs[:path]) : nil
-                    if local_destination == ''
-                        local_destination = ns_filename
-                    elsif File.directory?(local_destination)
-                        local_destination = File.join(local_destination, ns_filename)
-                    end
+                ns_filename = kwargs[:path][-1] != '/' ? File.basename(kwargs[:path]) : nil
+                if local_destination == ''
+                    local_destination = ns_filename
+                elsif File.directory?(local_destination)
+                    local_destination = File.join(local_destination, ns_filename)
                 end
+                
                 response = Net::HTTP.start(uri.hostname, uri.port, 
                   :use_ssl => uri.scheme == 'https') { |http| 
                     http.request @request do |res|
-                        open(local_destination, "wb") do |io|
-                            res.read_body do |chunk|
-                                io.write chunk
+                        begin
+                            open(local_destination, "wb") do |io|
+                                res.read_body do |chunk|
+                                    io.write chunk
+                                end
                             end
+                        rescue Exception => e
+                            raise NetstorageError, e
                         end
                     end
                 }
@@ -65,7 +77,11 @@ module Akamai
             end
 
             if kwargs[:action] == "upload"
-                @request.body = File.read(kwargs[:source]) 
+                begin
+                    @request.body = File.read(kwargs[:source])
+                rescue Exception => e
+                    raise NetstorageError, e
+                end 
             end 
             
             response = Net::HTTP.start(uri.hostname, uri.port, 
@@ -77,6 +93,11 @@ module Akamai
         end
         
         def _request(kwargs={})
+            path = kwargs[:path].to_s 
+            if !path.start_with?('/')
+                raise NetstorageError, '[NetstorageError] Invalid netstorage path'
+            end
+
             path = URI::escape(kwargs[:path])
             acs_action = "version=1&action=#{kwargs[:action]}"
             acs_auth_data = "5, 0.0.0.0, 0.0.0.0, #{Time.now.to_i}, #{Random.rand(100000)}, #{@keyname}"
@@ -91,7 +112,8 @@ module Akamai
                 'X-Akamai-ACS-Action' => acs_action,
                 'X-Akamai-ACS-Auth-Data' => acs_auth_data,
                 'X-Akamai-ACS-Auth-Sign' => acs_auth_sign,
-                'Accept-Encoding' => "identity"
+                'Accept-Encoding' => 'identity',
+                'User-Agent' => 'NetStorageKit-Ruby'
             }
 
             if kwargs[:method] == "GET"
@@ -177,8 +199,12 @@ module Akamai
         end
 
         def upload(local_source, ns_destination)
-            if File.file?(local_source) && ns_destination[-1] == "/" 
-                ns_destination = "#{ns_destination}#{File.basename(local_source)}"
+            if File.file?(local_source) 
+                if ns_destination[-1] == "/" 
+                    ns_destination = "#{ns_destination}#{File.basename(local_source)}"
+                end
+            else
+                raise NetstorageError, "[NetstorageError] #{ns_destination} doesn't exist or is directory"
             end
             return _request(action: "upload",
                             method: "PUT",

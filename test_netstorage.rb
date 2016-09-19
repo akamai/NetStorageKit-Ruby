@@ -139,4 +139,18 @@ class TestNetstorage < Test::Unit::TestCase
         assert_equal(true, ok, "rmdir fail.")
         puts "[TEST] rmdir #{@temp_ns_dir} done"
     end
+
+    def test_netstorage_exception
+        puts ''
+
+        assert_raise Akamai::NetstorageError do
+            @ns.dir("Invalid ns path")         
+        end
+        puts "[TEST] Invalid ns path NetstorageError test done"
+        
+        assert_raise Akamai::NetstorageError do
+            @ns.upload("Invalid local path", @temp_ns_file)         
+        end
+        puts "[TEST] Invalid local path NetstorageError test done"
+    end
 end
