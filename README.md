@@ -95,7 +95,7 @@ Started
 
 Finished in x.xxxxxx seconds.
 --------------------------------------------------------------------------------
-2 tests, 14 assertions, 0 failures, 0 errors, 0 pendings, 0 omissions, 0 notifications
+2 tests, 15 assertions, 0 failures, 0 errors, 0 pendings, 0 omissions, 0 notifications
 100% passed
 --------------------------------------------------------------------------------
 x.xx tests/s, x.xx assertions/s
