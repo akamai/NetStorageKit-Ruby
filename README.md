@@ -49,7 +49,7 @@ Methods
 > ns.list(NETSTORAGE_PATH)
 > ns.mkdir("#{NETSTORAGE_PATH}/#{DIRECTORY_NAME}")
 > ns.mtime(NETSTORAGE_PATH, TIME) # ex) TIME: Time.now.to_i
-> ns.quick_delete(NETSTORAGE_DIR) # needs to be enabled on the CP Code
+> ns.quick_delete(NETSTORAGE_DIR) # needs to the privilege on the CP Code
 > ns.rename(NETSTORAGE_TARGET, NETSTORAGE_DESTINATION)
 > ns.rmdir(NETSTORAGE_DIR) # remove empty direcoty
 > ns.stat(NETSTORAGE_PATH)
@@ -90,6 +90,7 @@ Started
 .
 [TEST] Invalid ns path NetstorageError test done
 [TEST] Invalid local path NetstorageError test done
+[TEST] Download directory path NetstorageError test done
 .
 
 Finished in x.xxxxxx seconds.
@@ -97,7 +98,7 @@ Finished in x.xxxxxx seconds.
 2 tests, 14 assertions, 0 failures, 0 errors, 0 pendings, 0 omissions, 0 notifications
 100% passed
 --------------------------------------------------------------------------------
-0.78 tests/s, 5.47 assertions/s
+x.xx tests/s, x.xx assertions/s
 ```
   
   

@@ -151,6 +151,11 @@ class TestNetstorage < Test::Unit::TestCase
         assert_raise Akamai::NetstorageError do
             @ns.upload("Invalid local path", @temp_ns_file)         
         end
-        puts "[TEST] Invalid local path NetstorageError test done"
+        puts "[TEST] Invalid upload local path NetstorageError test done"
+
+        assert_raise Akamai::NetstorageError do
+            @ns.download("/123456/directory/", @temp_file)
+        end
+        puts "[TEST] Download directory path NetstorageError test done"
     end
 end

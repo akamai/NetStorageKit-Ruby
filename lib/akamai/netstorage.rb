@@ -52,11 +52,11 @@ module Akamai
         def _response(uri, kwargs)
             if kwargs[:action] == "download"
                 local_destination = kwargs[:destination]
-                ns_filename = kwargs[:path][-1] != '/' ? File.basename(kwargs[:path]) : nil
+                
                 if local_destination == ''
-                    local_destination = ns_filename
+                    local_destination = File.basename(kwargs[:path])
                 elsif File.directory?(local_destination)
-                    local_destination = File.join(local_destination, ns_filename)
+                    local_destination = File.join(local_destination, File.basename(kwargs[:path]))
                 end
                 
                 response = Net::HTTP.start(uri.hostname, uri.port, 
@@ -138,6 +138,10 @@ module Akamai
         end
 
         def download(ns_source, local_destination='')
+            if ns_source.end_with?('/')
+                raise NetstorageError, "[NetstorageError] Nestorage download path shouldn't be a directory: #{ns_source}"
+            end
+
             return _request(action: "download",
                             method: "GET",
                             path: ns_source,
