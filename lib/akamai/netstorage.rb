@@ -204,7 +204,7 @@ module Akamai
 
         def upload(local_source, ns_destination)
             if File.file?(local_source) 
-                if ns_destination[-1] == "/" 
+                if ns_destination.end_with?('/')
                     ns_destination = "#{ns_destination}#{File.basename(local_source)}"
                 end
             else
