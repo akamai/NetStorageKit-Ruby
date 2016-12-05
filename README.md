@@ -46,7 +46,6 @@ Methods
 > ns.dir(NETSTORAGE_PATH)
 > ns.download(NETSTORAGE_SOURCE, LOCAL_DESTINATION)
 > ns.du(NETSTORAGE_PATH)
-> ns.list(NETSTORAGE_PATH)
 > ns.mkdir("#{NETSTORAGE_PATH}/#{DIRECTORY_NAME}")
 > ns.mtime(NETSTORAGE_PATH, TIME) # ex) TIME: Time.now.to_i
 > ns.quick_delete(NETSTORAGE_DIR) # needs to the privilege on the CP Code
