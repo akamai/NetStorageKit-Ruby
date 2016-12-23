@@ -20,8 +20,8 @@
 require "securerandom"
 require "test/unit"
 
-require "akamai/netstorage"
-# require_relative "lib/akamai/netstorage"
+# require "akamai/netstorage" # For you
+require_relative "lib/akamai/netstorage" # For travis-ci
 # require "nokogiri"
 
 
