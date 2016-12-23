@@ -2,7 +2,10 @@ NetstorageAPI: Akamai Netstorage API for Ruby
 ===============================================
 
 [![Gem Version](https://badge.fury.io/rb/netstorageapi.svg)](https://badge.fury.io/rb/netstorageapi)
+[![Build Status](https://travis-ci.org/akamai-open/NetStorageKit-Ruby.svg?branch=master)](https://travis-ci.org/akamai-open/NetStorageKit-Ruby)
+[![License](http://img.shields.io/:license-apache-blue.svg)](https://github.com/akamai-open/NetStorageKit-Ruby/blob/master/LICENSE)
 
+  
 NetstorageAPI is Akamai Netstorage (File/Object Store) API for Ruby 2.0+.
   
   
@@ -23,7 +26,7 @@ Example
 > require "akamai/netstorage"
 > 
 > NS_HOSTNAME = "astin-nsu.akamaihd.net"
-> NS_KEYNAME = "astinastin"
+> NS_KEYNAME = "astinapi"
 > NS_KEY = "xxxxxxxxxx" # Don't expose NS_KEY on public repository.
 > NS_CPCODE = "360949"
 > 
@@ -107,7 +110,7 @@ Command
 You can run the [script](https://github.com/AstinCHOI/NetStorageKit-Ruby/blob/master/cms_netstorage.rb) with command line parameters.
 
 ```bash
-$ ruby cms_netstorage.rb -H astin-nsu.akamaihd.net -k astinastin -K xxxxxxxxxx -a dir /360949
+$ ruby cms_netstorage.rb -H astin-nsu.akamaihd.net -k astinapi -K xxxxxxxxxx -a dir /360949
 ```
   
 Use -h or --help option for more detail.

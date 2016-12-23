@@ -26,9 +26,10 @@ require "akamai/netstorage"
 
 
 NS_HOSTNAME = "astin-nsu.akamaihd.net"
-NS_KEYNAME = "astinastin"
-require_relative "spike/secrets" 
-NS_KEY = KEY # DO NOT EXPOSE IT
+NS_KEYNAME = "astinapi"
+# require_relative "spike/secrets" 
+# NS_KEY = KEY # DO NOT EXPOSE IT
+NS_KEY = ENV['NS_KEY'] # export NS_KEY="xxxxxxxxxxxx" 
 NS_CPCODE = "360949"
 
 
