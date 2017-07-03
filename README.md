@@ -2,8 +2,8 @@ NetstorageAPI: Akamai Netstorage API for Ruby
 ===============================================
 
 [![Gem Version](https://badge.fury.io/rb/netstorageapi.svg)](https://badge.fury.io/rb/netstorageapi)
-[![Build Status](https://travis-ci.org/akamai-open/NetStorageKit-Ruby.svg?branch=master)](https://travis-ci.org/akamai-open/NetStorageKit-Ruby)
-[![License](http://img.shields.io/:license-apache-blue.svg)](https://github.com/akamai-open/NetStorageKit-Ruby/blob/master/LICENSE)
+[![Build Status](https://travis-ci.org/akamai/NetStorageKit-Ruby.svg?branch=master)](https://travis-ci.org/akamai/NetStorageKit-Ruby)
+[![License](http://img.shields.io/:license-apache-blue.svg)](https://github.com/akamai/NetStorageKit-Ruby/blob/master/LICENSE)
 
   
 NetstorageAPI is Akamai Netstorage (File/Object Store) API for Ruby 2.0+.
