@@ -2,7 +2,7 @@
 
 # Original author: Astin Choi <achoi@akamai.com>
 
-# Copyright 2016 Akamai Technologies http://developer.akamai.com.
+# Copyright 2018 Akamai Technologies http://developer.akamai.com.
 
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -120,6 +120,8 @@ if options[:host] && options[:keyname] && options[:key] && options[:action]
         ok, response = ns.download(ARGV.shift, (tmp = ARGV.shift) == nil ? '' : tmp)
     elsif options[:action] == "du"
         ok, response = ns.du(ARGV.shift)
+    elsif options[:action] == "list"
+        ok, response = ns.list(ARGV.shift)
     elsif options[:action] == "mkdir"
         ok, response = ns.mkdir(ARGV.shift)
     elsif options[:action] == "mtime"
@@ -133,7 +135,7 @@ if options[:host] && options[:keyname] && options[:key] && options[:action]
     elsif options[:action] == "symlink"
         ok, response = ns.symlink(ARGV.shift, ARGV.shift)
     elsif options[:action] == "upload"
-        ok, response = ns.upload(ARGV.shift, ARGV.shift)
+        ok, response = ns.upload(ARGV.shift, ARGV.shift, ARGV.shift)
     else 
         puts optparse
         exit

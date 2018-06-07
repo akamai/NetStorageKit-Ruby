@@ -2,7 +2,7 @@
 
 # Original author: Astin Choi <achoi@akamai.com>
 
-# Copyright 2016 Akamai Technologies http://developer.akamai.com.
+# Copyright 2018 Akamai Technologies http://developer.akamai.com.
 
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -109,11 +109,11 @@ module Akamai
 
             uri = URI("http#{@ssl}://#{@hostname}#{path}")
             headers = {
-                'X-Akamai-ACS-Action' => acs_action,
-                'X-Akamai-ACS-Auth-Data' => acs_auth_data,
-                'X-Akamai-ACS-Auth-Sign' => acs_auth_sign,
-                'Accept-Encoding' => 'identity',
-                'User-Agent' => 'NetStorageKit-Ruby'
+                :'X-Akamai-ACS-Action' => acs_action,
+                :'X-Akamai-ACS-Auth-Data' => acs_auth_data,
+                :'X-Akamai-ACS-Auth-Sign' => acs_auth_sign,
+                :'Accept-Encoding' => 'identity',
+                :'User-Agent' => 'NetStorageKit-Ruby'
             }
 
             if kwargs[:method] == "GET"
@@ -131,8 +131,14 @@ module Akamai
 
         public
 
-        def dir(ns_path)
-            return _request(action: "dir&format=xml",
+        def dir(ns_path, option={})
+            return _request(action: "dir&format=xml&#{URI.encode_www_form(option)}",
+                            method: "GET",
+                            path: ns_path)
+        end
+
+        def list(ns_path, option={})
+            return _request(action: "list&format=xml&#{URI.encode_www_form(option)}",
                             method: "GET",
                             path: ns_path)
         end
@@ -202,7 +208,7 @@ module Akamai
                             path: ns_destination)
         end
 
-        def upload(local_source, ns_destination)
+        def upload(local_source, ns_destination, index_zip=false)
             if File.file?(local_source) 
                 if ns_destination.end_with?('/')
                     ns_destination = "#{ns_destination}#{File.basename(local_source)}"
@@ -210,7 +216,12 @@ module Akamai
             else
                 raise NetstorageError, "[NetstorageError] #{ns_destination} doesn't exist or is directory"
             end
-            return _request(action: "upload",
+            action = "upload"
+            if index_zip == true or index_zip.to_s.downcase == "true"
+                action += "&index-zip=2"
+            end
+
+            return _request(action: action,
                             method: "PUT",
                             source: local_source,
                             path: ns_destination) 

@@ -19,18 +19,19 @@
 
 require "securerandom"
 require "test/unit"
-
+require_relative "../lib/akamai/netstorage" # For Test
 # require "akamai/netstorage" # For you
-require_relative "lib/akamai/netstorage" # For travis-ci
 # require "nokogiri"
 
 
-NS_HOSTNAME = "astin-nsu.akamaihd.net"
-NS_KEYNAME = "astinapi"
-# require_relative "spike/secrets" 
-# NS_KEY = KEY # DO NOT EXPOSE IT
-NS_KEY = ENV['NS_KEY'] # export NS_KEY="xxxxxxxxxxxx" 
-NS_CPCODE = "360949"
+if ENV['TEST_MODE'] == 'TRAVIS'
+    NS_HOSTNAME = ENV['NS_HOSTNAME']
+    NS_KEYNAME = ENV['NS_KEYNAME']
+    NS_KEY = ENV['NS_KEY']
+    NS_CPCODE = ENV['NS_CPCODE']
+else
+    require_relative "../spike/secret"
+end
 
 
 class TestNetstorage < Test::Unit::TestCase
@@ -78,6 +79,11 @@ class TestNetstorage < Test::Unit::TestCase
         ok, _ = @ns.dir("/#{NS_CPCODE}")
         assert_equal(true, ok, "dir fail")
         puts "[TEST] dir /#{NS_CPCODE} done"
+
+        # list
+        ok, _ = @ns.list("/#{NS_CPCODE}")
+        assert_equal(true, ok, "list fail")
+        puts "[TEST] list /#{NS_CPCODE} done"
 
         # mkdir
         ok, _ = @ns.mkdir(@temp_ns_dir)
