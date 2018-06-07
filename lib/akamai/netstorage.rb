@@ -109,11 +109,11 @@ module Akamai
 
             uri = URI("http#{@ssl}://#{@hostname}#{path}")
             headers = {
-                'X-Akamai-ACS-Action' => acs_action,
-                'X-Akamai-ACS-Auth-Data' => acs_auth_data,
-                'X-Akamai-ACS-Auth-Sign' => acs_auth_sign,
-                'Accept-Encoding' => 'identity',
-                'User-Agent' => 'NetStorageKit-Ruby'
+                :'X-Akamai-ACS-Action' => acs_action,
+                :'X-Akamai-ACS-Auth-Data' => acs_auth_data,
+                :'X-Akamai-ACS-Auth-Sign' => acs_auth_sign,
+                :'Accept-Encoding' => 'identity',
+                :'User-Agent' => 'NetStorageKit-Ruby'
             }
 
             if kwargs[:method] == "GET"
