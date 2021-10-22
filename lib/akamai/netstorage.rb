@@ -76,7 +76,7 @@ module Akamai
                 return response
             end
 
-            if kwargs[:action] == "upload"
+            if kwargs[:action].start_with?("upload")
                 begin
                     @request.body = File.read(kwargs[:source])
                 rescue Exception => e
@@ -218,7 +218,7 @@ module Akamai
             end
             action = "upload"
             if index_zip == true or index_zip.to_s.downcase == "true"
-                action += "&index-zip=2"
+                action += "&index-zip=1"
             end
 
             return _request(action: action,
