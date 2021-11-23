@@ -7,8 +7,12 @@ NetstorageAPI: Akamai Netstorage API for Ruby
 
   
 NetstorageAPI is Akamai Netstorage (File/Object Store) API for Ruby 2.0+.
-  
-  
+
+Important
+------------
+
+Akamai does not maintain or regulate this package. While it can be incorporated to assist you in API use, Akamai Technical Support will not offer assistance and Akamai cannot be held liable if issues arise from its use. 
+
 Installation
 ------------
 
